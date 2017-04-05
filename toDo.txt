@@ -1,0 +1,13 @@
+Client => Interface => BDD
+					=> Services de stockage S (cache)
+					
+Le service de stockage est le cache, on hash la requete et la clé permet d'accéder aux données dans le serveur.
+Requêtes en parallèle dans les services de stockage, si la clé commence par 0, ou 1, aller à un service ou l'autre.
+S'assurer que les données sont bien en mémoire, éviction des plus anciennes valeurs sur les services.
+Clé => liste (redis), stocker partiellement ou entièrement les données de la liste.
+
+From scratch, réimplémenter le service de stockage.
+1) Une librairie qui stocke des valeurs (Redis tuto, refaire le même genre de chose)
+Clé + valeur, stocke moi ça. Voici la clé, donnez moi la valeur.
+
+
