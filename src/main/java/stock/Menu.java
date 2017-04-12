@@ -1,17 +1,19 @@
-package main.java;
+package stock;
+
+import java.lang.String;
 
 public class Menu{
 	
-	static final int MENU 0;
-	static final int COMMANDES 1;
-	static final int MANIPULATE 2;
+	static final int MENU = 0;
+	static final int COMMANDES = 1;
+	static final int MANIPULATE = 2;
 	
 	
 	Menu(){
 		
 	}
 	
-	Public String dialog(String state){
+	public String dialog(int state){
 		String sentence;
 		switch(state){
 			case MENU :
