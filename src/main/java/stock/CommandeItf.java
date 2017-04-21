@@ -28,7 +28,6 @@ public interface CommandeItf<T> {
 	 
 	public String HSET(String key,String field, T value);
 	public T HGETALL(String key);
-	//public String HMSET(String key, LinkedList<String> value);
 	public String HGET(String key, String field);
 	public String HINCRBY(String key, String field, String value);
 	public String HDECRBY(String key, String field, String value);
