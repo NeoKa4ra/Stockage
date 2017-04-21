@@ -1,6 +1,7 @@
 package stock;
 
 import java.util.LinkedList;
+import java.util.Set;
 
 public interface CommandeItf<T> {
 
@@ -19,8 +20,8 @@ public interface CommandeItf<T> {
 	public String LLEN(String key); 
 	
 	
-	public String SREM(String key); 
-	public String SADD(String key, LinkedList<String> value); 
+	public String SREM(String key, String value); 
+	public String SADD(String key, Set<String> value); 
 	public String SISMEMBER(String key, T value); 
 	public String SMEMBERS(String key);
 	public String SUNION(String key1, String key2);
@@ -29,8 +30,9 @@ public interface CommandeItf<T> {
 	public T HGETALL(String key);
 	//public String HMSET(String key, LinkedList<String> value);
 	public String HGET(String key, String field);
-	public String HINCRBY(String key, int value);
-	public String HDEL(String key);
+	public String HINCRBY(String key, String field, String value);
+	public String HDECRBY(String key, String field, String value);
+	public String HDEL(String key, String field);
 
 
 }
