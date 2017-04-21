@@ -11,112 +11,105 @@ public class Commandes implements CommandeItf<String>{
 		stock = new HashMap<String,LinkedList<String>>();
 	}
 
-	@Override
-	public String LPUSH(String key, LinkedList<String> value) {
-		if(stock.containsKey(key)){	
-			LinkedList<String> list = stock.get(key);
-			value.addAll(list);
-			stock.put(key, value);
-			
-			return String.valueOf(value.size());
-		}else{
-			stock.put(key, value);
-			return String.valueOf(value.size());
-		}
-	}
-	@Override
-	public String RPUSH(String key, LinkedList<String> value) {
-		if(stock.containsKey(key)){	
-			LinkedList<String> list = stock.get(key);
-			list.addAll(value);
-			stock.put(key, list);
-			
-			return String.valueOf(list.size());
-		}else{
-			stock.put(key, value);
-			return String.valueOf(value.size());
-		}
-		
-	}
-
-	@Override
-	public String LPUSHX(String key, LinkedList<String> value) {
-		if(stock.containsKey(key)){	
-			LinkedList<String> list = stock.get(key);
-			value.addAll(list);
-			stock.put(key, value);
-			
-			return String.valueOf(value.size());
-		}else{
-			return "0";
-		}
-	}
-
-	@Override
-	public String RPUSHX(String key, LinkedList<String> value) {
-		if(stock.containsKey(key)){	
-			LinkedList<String> list = stock.get(key);
-			list.addAll(value);
-			stock.put(key, list);
-			
-			return String.valueOf(list.size());
-		}else{
-			return "0";
-		}
-	}
-
-	@Override
-	public String LINSERT(String key, String mode, String value, String insert) {
+	public String GET(String key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public String LPOP(String key) {
+	public String SET(String key, String value) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public String RPOP(String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String LLEN(String key) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String LSET(String key, int index, String value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String SREM(String key, LinkedList<String> value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String APPEND(String key, String value) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String DECR(String key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
 	public String INCR(String key) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public String DEL(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String LPUSH(String key, LinkedList<String> value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String RPUSH(String key, LinkedList<String> value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String LPOP(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String RPOP(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String LLEN(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String SREM(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String SADD(String key, LinkedList<String> value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String SISMEMBER(String key, String value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String SMEMBERS(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String SUNION(String key1, String key2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String HSET(String key, String field, String value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String HGETALL(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String HGET(String key, String field) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String HINCRBY(String key, int value) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String HDEL(String key) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
