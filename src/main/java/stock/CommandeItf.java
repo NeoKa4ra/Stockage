@@ -13,8 +13,8 @@ public interface CommandeItf<T> {
 	public String INCR(String key);
 	public String DEL(String key);
 		
-	public String LPUSH(String key, LinkedList<T> value); //push left 
-	public String RPUSH(String  key, LinkedList<T> value);//push right  
+	public String LPUSH(String key, LinkedList<T> value); 
+	public String RPUSH(String  key, LinkedList<T> value);
 	public String LPOP(String key); 
 	public String RPOP(String key); 
 	public String LLEN(String key); 
