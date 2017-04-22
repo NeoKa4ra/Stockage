@@ -9,7 +9,7 @@ public class Menu{
 	static final int MANIPULATE = 2;
 	
 	
-	Menu(){
+	public Menu(){
 		
 	}
 	
@@ -23,10 +23,10 @@ public class Menu{
 				sentence = "";
 				break;
 			case MANIPULATE :
-				sentence = "Entrée incorrecte";
+				sentence = "Entree incorrecte";
 				break;
 			default :
-				sentence = "Entrée incorrecte";
+				sentence = "Entree incorrecte";
 
 		}
 		return sentence;

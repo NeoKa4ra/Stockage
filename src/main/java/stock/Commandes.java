@@ -155,7 +155,6 @@ public class Commandes implements CommandeItf<String>{
 				if(tmp.contains(value)){
 					stockSet.get(key).remove(value);
 					return "(Integer) 1";
-					
 				}else{
 					return "(Integer) 0";				
 				}
