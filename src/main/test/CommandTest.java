@@ -1,5 +1,8 @@
+package test;
+
 import static org.junit.Assert.*;
 
+import java.stock.Commandes;
 import java.util.LinkedList;
 
 import org.junit.After;
@@ -19,64 +22,57 @@ public class CommandTest {
 	}
 
 	@Test
-	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public void testGET(){
+		Commandes cmd = new Commandes ();
+		cmd.SET("Book", "SLPC");
+		assertEquals("Test GET ","SLPC",cmd.GET("Book"));
 	}
 	
 	@Test
-	public void LPUSH(){
-		fail("Not yet implemented");
-	} 
-	@Test
-	public void RPUSH(){
-		fail("Not yet implemented");
-	} 
-	@Test
-	public void LPUSHX(){
-		fail("Not yet implemented");
+	public void testSET(){
+		Commandes cmd = new Commandes ();
+		String result = cmd.SET("Book", "Romeo and Juliet");
+		assertEquals("Test SET ","OK",result);
 	}
-	@Test
-	public void RPUSHX(){
-		fail("Not yet implemented");
-	} 
-
-	@Test
-	public void LINSERT(){
-		fail("Not yet implemented");
-	} 
-	@Test
-	public void LPOP(){
-		fail("Not yet implemented");
-	} 
-	@Test
-	public void RPOP(){
-		fail("Not yet implemented");
-	} 
-	@Test
-	public void LLEN(){
-		fail("Not yet implemented");
-	} 
-	@Test
-	public void LSET(){
-		fail("Not yet implemented");
-	} 
-	@Test
-	public void SREM(){
-		fail("Not yet implemented");
-	} 
 	
 	@Test
-	public void APPEND(){
-		fail("Not yet implemented");
-	} 
+	public void testDECR(){
+		Commandes cmd = new Commandes ();
+		cmd.SET("Number", "124");
+		cmd.INCR("Number");
+		assertEquals("Test DECR ", "125", cmd.GET("Number"));
+	}
+	
 	@Test
-	public void DECR(){
-		fail("Not yet implemented");
-	} 
+	public void testINCR(){
+		Commandes cmd = new Commandes ();
+		cmd.SET("Number", "27");
+		cmd.INCR("Number");
+		assertEquals("Test DECR ", "26", cmd.GET("Number"));
+	}
+	
 	@Test
-	public void INCR(){
-		fail("Not yet implemented");
+	public void testDEL(){
+		Commandes cmd = new Commandes ();
+		cmd.SET("Number", "124");
+		cmd.DEL("Number");
+		assertEquals("Test DECR ", "the given key does not exists", cmd.GET("Number"));
+	}
+	
+	@Test
+	public void testLPush(){
+		Commandes cmd = new Commandes ();
+		//cmd.LPUSH("Number", "124");
+		//cmd.LPUSH("Number", "125");
+		assertEquals("Test LPush ", "125 124", cmd.GET("Number"));
+	}
+	
+	@Test
+	public void testRPush(){
+		Commandes cmd = new Commandes ();
+		//cmd.RPUSH("Number", "124");
+		//cmd.RPUSH("Number", "125");
+		assertEquals("Test LPush ", "124 125", cmd.GET("Number"));
 	}
 
 }

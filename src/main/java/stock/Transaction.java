@@ -1,4 +1,4 @@
-package stock;
+package java.stock;
 
 public class Transaction{
 	

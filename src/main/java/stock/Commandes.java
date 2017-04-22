@@ -1,8 +1,9 @@
-package stock;
+package java.stock;
 
 
 import java.util.LinkedList;
 import java.util.Set;
+import java.stock.CommandeItf;
 import java.util.HashMap;
 
 public class Commandes implements CommandeItf<String>{
