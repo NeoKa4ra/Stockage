@@ -5,10 +5,36 @@ import java.util.LinkedList;
 import java.util.Set;
 
 public class Transaction{
-	Commandes cmd;
+	private Commandes cmd;
 	
 	public Transaction(){
 		cmd = new Commandes();
+	}
+	
+	public void printCommande(){
+		System.out.println(
+				"GET key\n"+ 
+				"SET key value\n"+
+				"DECR key\n"+ 
+				"INCR  key\n"+
+				"DEL  key\n"+		
+				"LPUSH key list value\n"+ 
+				"RPUSH key list value \n"+
+				"LPOP  key\n"+ 
+				"RPOP  key\n"+ 
+				"LLEN  key\n"+ 		
+				"SREM  key value\n" + 
+				"SADD  key value\n"+
+				"SISMEMBER  key value\n" + 
+				"SMEMBERS  key\n"+
+				"SUNION  key1 key2\n"+	 
+				"HSET  key field value\n"+
+				"HGETALL  key\n"+
+				"HGET  key field\n"+
+				"HINCRBY  key field value\n"+
+				"HDECRBY  key field value \n"+
+				"HDEL  key field\n"
+				);
 	}
 	
 	public void execCommande(String s){

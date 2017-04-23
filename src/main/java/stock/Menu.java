@@ -8,27 +8,39 @@ public class Menu{
 	static final int COMMANDES = 1;
 	static final int MANIPULATE = 2;
 	
+	private Transaction tr ;
+	private int state;
 	
 	Menu(){
-		
+		state = 0;
+		tr = new Transaction();
 	}
 	
-	public String dialog(int state){
-		String sentence;
+	public void dialog(String input){
+
 		switch(state){
 			case MENU :
-				sentence = "Menu :" + "1 : Commandes" + "2 : Manipulation";
+				System.out.println("Menu :" + "1 : Commands" + "2 : Manipulation");
+				if(input.equals("1")){
+					tr.printCommande();;
+				}else if(input.equals("2")){
+					state = MANIPULATE;
+				}else{
+					System.out.println("");
+				}
+				
 				break;
+				
 			case COMMANDES :
-				sentence = "";
+				
 				break;
 			case MANIPULATE :
-				sentence = "Entrée incorrecte";
+				tr.execCommande(input);
 				break;
 			default :
-				sentence = "Entrée incorrecte";
+				System.out.println("Entrée incorrecte");
 
 		}
-		return sentence;
 	}
+	
 }
