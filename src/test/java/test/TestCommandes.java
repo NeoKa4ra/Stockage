@@ -1,15 +1,17 @@
 package test;
 
+import static org.junit.Assert.*;
+
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import junit.framework.TestCase;
 import stock.Commandes;
 
-public class TestCommandes extends TestCase {
+public class TestCommandes {
 	protected Commandes c;
 	
 	@Before
@@ -40,11 +42,11 @@ public class TestCommandes extends TestCase {
 	
 	@Test
 	public void testINCR(){
-		assertEquals(this.c.DECR("unexisting"),"the given key does not exists");
+		assertEquals(this.c.INCR("unexisting"),"the given key does not exists");
 		this.c.SET("notAnInteger","Hello");
-		assertEquals(this.c.DECR("notAnInteger"), "the given value of the key is not an integer");
+		assertEquals(this.c.INCR("notAnInteger"), "the given value of the key is not an integer");
 		this.c.SET("anInteger","15");
-		assertEquals(this.c.DECR("anInteger"), "(Integer) " + 16);
+		assertEquals(this.c.INCR("anInteger"), "(Integer) " + 16);
 	}
 	
 	@Test
@@ -53,7 +55,7 @@ public class TestCommandes extends TestCase {
 		this.c.SET("notAnInteger","Hello");
 		assertEquals(this.c.DECR("notAnInteger"), "the given value of the key is not an integer");
 		this.c.SET("anInteger","15");
-		assertEquals(this.c.DECR("anInteger"), "(Integer) 0");
+		assertEquals(this.c.DECR("anInteger"), "(Integer) 14");
 	}
 	
 	@Test
@@ -117,50 +119,73 @@ public class TestCommandes extends TestCase {
 		list.add("3rd Elt");
 		list.add("4th Elt");
 		this.c.LPUSH("listLLEN",list);
-		assertEquals(this.c.LLEN("listLLEN"),4);
+		assertEquals(this.c.LLEN("listLLEN"),"4");
 	}
 	
 	@Test
 	public void testSREM(){
 		assertEquals(this.c.SREM("notAList","First Elt"),"the given key does not exists");
-		LinkedList<String> list = new LinkedList<String>();
-		list.add("First Elt");
-		list.add("Scnd Elt");
-		list.add("3rd Elt");
-		list.add("4th Elt");
-		this.c.LPUSH("list",list);
-		assertEquals(this.c.SREM("list","First Elt"),"(Integer) 1");
-		assertEquals(this.c.SREM("list","First Elt"),"(Integer) 0");
+		Set<String> set = new HashSet<String>();
+		set.add("1 Elt");
+		set.add("2 Elt");
+		set.add("3 Elt");
+		c.SADD("cle", set);
+		assertEquals(this.c.SREM("cle","1 Elt"),"(Integer) 1");
+		assertEquals(this.c.SREM("cle","1 Elt"),"(Integer) 0");
 	}
 	
 	@Test
 	public void testSADD(){
 		// UNDONE
+		Set<String> set = new HashSet<String>();
+		set.add("1 Elt");
+		set.add("2 Elt");
+		set.add("3 Elt");
+		assertEquals(c.SADD("cle", set), "(Integer) " + 3);
+		set = new HashSet<String>();
+		set.add("4 Elt");
+		set.add("5 Elt");
+		set.add("6 Elt");
+		assertEquals(c.SADD("cle", set), "(Integer) " + 6);
 	}
 	
 	@Test
 	public void testSISMEMBER(){
 		assertEquals(this.c.SISMEMBER("notAList","First Elt"),"the given key does not exists");
-		LinkedList<String> list = new LinkedList<String>();
-		list.add("First Elt");
-		list.add("Scnd Elt");
-		list.add("3rd Elt");
-		list.add("4th Elt");
-		this.c.LPUSH("list",list);
-		assertEquals(this.c.SISMEMBER("list","First Elt"),"(Integer) 1");
-		assertEquals(this.c.SISMEMBER("list","5th Elt"),"(Integer) 0");
+		Set<String> set = new HashSet<String>();
+		set.add("1 Elt");
+		set.add("2 Elt");
+		set.add("3 Elt");
+		c.SADD("cle", set);
+		assertEquals(this.c.SISMEMBER("cle","1 Elt"),"(Integer) 1");
+		assertEquals(this.c.SISMEMBER("cle","5th Elt"),"(Integer) 0");
 	}
 	
 	@Test
 	public void testSMEMBERS(){
-		assertEquals(this.c.GET("unexisting"),"the given key does not exists");
-		// Not full done
+		assertEquals(this.c.SMEMBERS("unexisting"),"the given key does not exists");
+		Set<String> set = new HashSet<String>();
+		set.add("1 Elt");
+		set.add("2 Elt");
+		set.add("3 Elt");
+		c.SADD("cle", set);
+		assertEquals(this.c.SMEMBERS("cle"),"[1 Elt, 3 Elt, 2 Elt]");
 	}
 	
 	@Test
 	public void testSUNION(){
-		assertEquals(this.c.GET("unexisting"),"the given key does not exists");
-		// Not full done
+		Set<String> set = new HashSet<String>();
+		set.add("1 Elt");
+		set.add("2 Elt");
+		set.add("3 Elt");
+		c.SADD("cle", set);
+		assertEquals(this.c.SUNION("cle","unexisting"),"[1 Elt, 3 Elt, 2 Elt]");
+		set = new HashSet<String>();
+		set.add("4 Elt");
+		set.add("5 Elt");
+		set.add("6 Elt");
+		c.SADD("cle2", set);
+		assertEquals(this.c.SUNION("cle","cle2"),"[5 Elt, 6 Elt, 1 Elt, 4 Elt, 3 Elt, 2 Elt]");
 	}
 	
 	@Test
@@ -174,7 +199,8 @@ public class TestCommandes extends TestCase {
 	@Test
 	public void testHGETALL(){
 		assertEquals(this.c.HGETALL("unexisting"),"the given key does not exists");
-		// UNDONE
+		this.c.HSET("key", "field", "value");
+		assertEquals(this.c.HGETALL("key"),"{field=value}");
 	}
 	
 	@Test
