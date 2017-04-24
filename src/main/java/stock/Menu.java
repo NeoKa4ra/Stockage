@@ -1,46 +1,65 @@
 package stock;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.String;
+import java.util.ArrayList;
 
 public class Menu{
 	
-	static final int MENU = 0;
-	static final int COMMANDES = 1;
-	static final int MANIPULATE = 2;
-	
+	static int MEMORYOVERFLOW = 15;
+	private ArrayList<String> historique;
 	private Transaction tr ;
-	private int state;
+
 	
 	Menu(){
-		state = 0;
-		tr = new Transaction();
+		historique = new ArrayList<String>();
+		tr = new Transaction();		
 	}
 	
-	public void dialog(String input){
-
-		switch(state){
-			case MENU :
-				System.out.println("Menu :" + "1 : Commands" + "2 : Manipulation");
-				if(input.equals("1")){
-					tr.printCommande();;
-				}else if(input.equals("2")){
-					state = MANIPULATE;
-				}else{
-					System.out.println("");
-				}
-				
-				break;
-				
-			case COMMANDES :
-				
-				break;
-			case MANIPULATE :
-				tr.execCommande(input);
-				break;
-			default :
-				System.out.println("Entrée incorrecte");
-
+	public void printHist(){
+		for(String s : historique){
+			System.out.println(s);
+		}
+		System.out.println(tr.size());
+	}
+	
+	public void updateMemory(){
+		while(tr.size() > MEMORYOVERFLOW){
+			String tmp = historique.remove(0);
+			tr.undoCommand(tmp);
 		}
 	}
 	
+	public int dialog(String input){
+		updateMemory();
+		if(input.equals("-help")){
+			tr.printCommande();			
+			return 0;
+		}else if(input.equals("-quit")){		
+			return -1;
+		}else if(input.equals("-hist")){
+			printHist();
+			return 0;
+		}else{
+			int res = tr.execCommande(input);
+			if(res == 0){
+				historique.add(input);
+			}
+			return 0;
+		}
+
+	}
+	
+	public static void main(String args[]) throws IOException{
+		Menu m = new Menu();
+		System.out.println("to see the list of commands tape -help, -hist to print the historic of commands -quit pour quitter");
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String inputLine = br.readLine();
+		while(m.dialog(inputLine) != -1){
+			inputLine = br.readLine();
+		}
+		
+	}
 }

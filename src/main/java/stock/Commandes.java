@@ -18,6 +18,32 @@ public class Commandes implements CommandeItf<String>{
 		stockSet = new HashMap<String, Set<String>>();
 		stockHash = new HashMap<String, HashMap<String,String>>();		
 	}
+	
+	public int size(){
+		int size = 0;
+		size += stockString.size();
+		size += stockList.size();
+		size += stockSet.size();
+		size += stockHash.size();
+		return size;
+	}
+	
+	public void removeString(String key){
+		stockString.remove(key);
+	}
+	
+	public void removeList(String key){
+		stockList.remove(key);
+	}
+	
+	public void removeSet(String key){
+		stockList.remove(key);
+	}
+	
+	public void removeHash(String key){
+		stockList.remove(key);
+	}
+	
 
 	public String GET(String key) {
 		if(stockString.containsKey(key)){
