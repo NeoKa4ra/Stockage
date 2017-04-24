@@ -13,7 +13,7 @@ public class Menu{
 	private Transaction tr ;
 
 	
-	Menu(){
+	public Menu(){
 		historique = new ArrayList<String>();
 		tr = new Transaction();		
 	}
