@@ -38,304 +38,307 @@ public class Transaction{
 	}
 	
 	public int execCommande(String s) throws NullPointerException{
-		String[] input = s.split(" ");
-		if(input[0] != null){
-			switch (input[0].toUpperCase()) {
-			
-				case "GET" :
-					if(input.length != 2){						
-						return execCommande("ERROR");
-					}else{
-						String print = cmd.GET(input[1]);						
-						System.out.println(print);		
-						if(print.equals("the given key does not exists")){
-							return -1;
-						}else{
-							return 0;
-						}
-						
-					}
+		try {
+			String[] input = s.split(" ");
+			if(!(input[0].trim().equals(""))){
+				switch (input[0].toUpperCase()) {
 				
-				case "SET" :
-					if(input.length != 3){						
-						return execCommande("ERROR");
-					}else{
-						String print = cmd.SET(input[1],input[2]) ;						
-						System.out.println(print);
-						return 0;
-					}						
-					
-				case "DECR" :
-					if(input.length != 2){						
-						return execCommande("ERROR");
-					}else{
-						String print =  cmd.DECR(input[1]);						
-						System.out.println(print);
-						String[] splitPrint = print.split(" ");
-						if(splitPrint[0].equals("(Integer)")){
-							return 0;
+					case "GET" :
+						if(input.length != 2){						
+							return execCommande("ERROR");
 						}else{
-							return -1;
+							String print = cmd.GET(input[1]);						
+							System.out.println(print);		
+							if(print.equals("the given key does not exists")){
+								return -1;
+							}else{
+								return 0;
+							}
+							
 						}
-					}
 					
-					
-				case "INCR" :
-					if(input.length != 2){						
-						return execCommande("ERROR");
-					}else{
-						String print =  cmd.INCR(input[1]);						
-						System.out.println(print);
-						String[] splitPrint = print.split(" ");
-						if(splitPrint[0].equals("(Integer)")){
-							return 0;
+					case "SET" :
+						if(input.length != 3){						
+							return execCommande("ERROR");
 						}else{
-							return -1;
-						}
-					}
-					
-					
-				case "DEL" :
-					if(input.length != 2){						
-						return execCommande("ERROR");
-					}else{
-						String print =  cmd.DEL(input[1]);						
-						System.out.println(print);
-						String[] splitPrint = print.split(" ");
-						if(splitPrint[0].equals("(Integer)")){
-							return 0;
-						}else{
-							return -1;
-						}
-					}
-					
-					
-				case "LPUSH" :
-					if(input.length < 3){
-						return execCommande("ERROR");
-					}else{
-						LinkedList<String> list1 = new LinkedList<String>();
-						for(int i = 2; i < input.length; i++){
-							list1.add(input[i]);
-						}
-						System.out.println(cmd.LPUSH(input[1],list1));
-						return 0;
-					}
-				
-				case "RPUSH" :
-					if(input.length < 3){
-						return execCommande("ERROR");
-					}else{
-						LinkedList<String> list2 = new LinkedList<String>();
-						for(int i = 2; i < input.length; i++){
-							list2.add(input[i]);
-						}
-						System.out.println(cmd.RPUSH(input[1],list2));					
-						return 0;
-					}
-					
-				case "LPOP" :
-					if(input.length != 2){						
-						return execCommande("ERROR");
-					}else{
-						String print =  cmd.LPOP(input[1]);						
-						System.out.println(print);
-						if(print.equals("the given key does not exists")){
-							return -1;
-						}else{
-							return 0;
-						}
-					}
-				
-				
-				case "RPOP" :
-					if(input.length != 2){						
-						return execCommande("ERROR");
-					}else{
-						String print =  cmd.RPOP(input[1]);						
-						System.out.println(print);
-						if(print.equals("the given key does not exists")){
-							return -1;
-						}else{
+							String print = cmd.SET(input[1],input[2]) ;						
+							System.out.println(print);
 							return 0;
 						}						
-					}
-					
-					
-				case "LLEN" :
-					if(input.length != 2){						
-						return execCommande("ERROR");
-					}else{
-						String print =  cmd.LLEN(input[1]);						
-						System.out.println(print);
-						if(print.equals("the given key does not exists")){
-							return -1;
+						
+					case "DECR" :
+						if(input.length != 2){						
+							return execCommande("ERROR");
 						}else{
+							String print =  cmd.DECR(input[1]);						
+							System.out.println(print);
+							String[] splitPrint = print.split(" ");
+							if(splitPrint[0].equals("(Integer)")){
+								return 0;
+							}else{
+								return -1;
+							}
+						}
+						
+						
+					case "INCR" :
+						if(input.length != 2){						
+							return execCommande("ERROR");
+						}else{
+							String print =  cmd.INCR(input[1]);						
+							System.out.println(print);
+							String[] splitPrint = print.split(" ");
+							if(splitPrint[0].equals("(Integer)")){
+								return 0;
+							}else{
+								return -1;
+							}
+						}
+						
+						
+					case "DEL" :
+						if(input.length != 2){						
+							return execCommande("ERROR");
+						}else{
+							String print =  cmd.DEL(input[1]);						
+							System.out.println(print);
+							String[] splitPrint = print.split(" ");
+							if(splitPrint[0].equals("(Integer)")){
+								return 0;
+							}else{
+								return -1;
+							}
+						}
+						
+						
+					case "LPUSH" :
+						if(input.length < 3){
+							return execCommande("ERROR");
+						}else{
+							LinkedList<String> list1 = new LinkedList<String>();
+							for(int i = 2; i < input.length; i++){
+								list1.add(input[i]);
+							}
+							System.out.println(cmd.LPUSH(input[1],list1));
+							return 0;
+						}
+					
+					case "RPUSH" :
+						if(input.length < 3){
+							return execCommande("ERROR");
+						}else{
+							LinkedList<String> list2 = new LinkedList<String>();
+							for(int i = 2; i < input.length; i++){
+								list2.add(input[i]);
+							}
+							System.out.println(cmd.RPUSH(input[1],list2));					
 							return 0;
 						}
 						
-					}
-					
-					
-				case "SREM" :
-					if(input.length != 3){						
-						return execCommande("ERROR");
-					}else{
-						String print =  cmd.SREM(input[1],input[2]);						
-						System.out.println(print);
-						if(print.equals("the given key does not exists")){
-							return -1;
+					case "LPOP" :
+						if(input.length != 2){						
+							return execCommande("ERROR");
 						}else{
+							String print =  cmd.LPOP(input[1]);						
+							System.out.println(print);
+							if(print.equals("the given key does not exists")){
+								return -1;
+							}else{
+								return 0;
+							}
+						}
+					
+					
+					case "RPOP" :
+						if(input.length != 2){						
+							return execCommande("ERROR");
+						}else{
+							String print =  cmd.RPOP(input[1]);						
+							System.out.println(print);
+							if(print.equals("the given key does not exists")){
+								return -1;
+							}else{
+								return 0;
+							}						
+						}
+						
+						
+					case "LLEN" :
+						if(input.length != 2){						
+							return execCommande("ERROR");
+						}else{
+							String print =  cmd.LLEN(input[1]);						
+							System.out.println(print);
+							if(print.equals("the given key does not exists")){
+								return -1;
+							}else{
+								return 0;
+							}
+							
+						}
+						
+						
+					case "SREM" :
+						if(input.length != 3){						
+							return execCommande("ERROR");
+						}else{
+							String print =  cmd.SREM(input[1],input[2]);						
+							System.out.println(print);
+							if(print.equals("the given key does not exists")){
+								return -1;
+							}else{
+								return 0;
+							}					
+						}
+						
+						
+					case "SADD" :
+						if(input.length < 3){
+							return execCommande("ERROR");
+						}else{
+							Set<String> set = new HashSet<String>();
+							for(int i = 2; i < input.length; i++){
+								set.add(input[i]);
+							}
+							System.out.println(cmd.SADD(input[1],set));
 							return 0;
+						}
+						
+					case "SISMEMBER" :
+						if(input.length != 3){						
+							return execCommande("ERROR");
+						}else{
+							String print =  cmd.SISMEMBER(input[1],input[2]);						
+							System.out.println(print);
+							if(print.equals("the given key does not exists")){
+								return -1;
+							}else{
+								return 0;
+							}	
+							
+						}
+						
+						
+					case "SMEMBERS" :
+						if(input.length != 2){						
+							return execCommande("ERROR");
+						}else{
+							String print =  cmd.SMEMBERS(input[1]);						
+							System.out.println(print);
+							if(print.equals("the given key does not exists")){
+								return -1;
+							}else{
+								return 0;
+							}
+							
+						}
+						
+						
+					case "SUNION" :
+						if(input.length != 3){						
+							return execCommande("ERROR");
+						}else{
+							System.out.println(cmd.SUNION(input[1],input[2]));
+							return 0;
+						}
+						
+						
+					case "HSET" :
+						if(input.length != 4){						
+							return execCommande("ERROR");
+						}else{
+							System.out.println(cmd.HSET(input[1],input[2],input[3]));
+							return 0;
+						}
+						
+						
+					case "HGETALL" :
+						if(input.length != 2){						
+							return execCommande("ERROR");
+						}else{
+							String print =  cmd.HGETALL(input[1]);						
+							System.out.println(print);
+							if(print.equals("the given key does not exists")){
+								return -1;
+							}else{
+								return 0;
+							}
+							
+						}
+						
+						
+					case "HGET" :
+						if(input.length != 3){						
+							return execCommande("ERROR");
+						}else{
+							String print =  cmd.HGET(input[1],input[2]);						
+							System.out.println(print);
+							if((print.equals("the given key does not exists"))||(print.equals("the given field does not exist"))){
+								return -1;
+							}else{
+								return 0;
+							}
+							
+						}
+						
+						
+					case "HINCRBY" :
+						if(input.length != 4){						
+							return execCommande("ERROR");
+						}else{
+							String print =  cmd.HINCRBY(input[1],input[2],input[3]);						
+							System.out.println(print);
+							String[] splitPrint = print.split(" "); 
+							if(splitPrint[1].equals("(Integer)")){
+								return 0;
+							}else{
+								return -1;
+							}	
+							
+						}
+						
+					
+					case "HDECRBY" :
+						if(input.length != 4){						
+							return execCommande("ERROR");
+						}else{
+							String print =  cmd.HDECRBY(input[1],input[2],input[3]);						
+							System.out.println(print);
+							String[] splitPrint = print.split(" "); 
+							if(splitPrint[1].equals("(Integer)")){
+								return 0;
+							}else{
+								return -1;
+							}												
+						}
+						
+					case "HDEL" :
+						if(input.length != 3){						
+							return execCommande("ERROR");
+						}else{
+							String print =  cmd.HDEL(input[1],input[2]);						
+							System.out.println(print);
+							String[] splitPrint = print.split(" "); 
+							if(splitPrint[1].equals("(Integer)")){
+								return 0;
+							}else{
+								return -1;
+							}							
 						}					
-					}
-					
-					
-				case "SADD" :
-					if(input.length < 3){
-						return execCommande("ERROR");
-					}else{
-						Set<String> set = new HashSet<String>();
-						for(int i = 2; i < input.length; i++){
-							set.add(input[i]);
-						}
-						System.out.println(cmd.SADD(input[1],set));
-						return 0;
-					}
-					
-				case "SISMEMBER" :
-					if(input.length != 3){						
-						return execCommande("ERROR");
-					}else{
-						String print =  cmd.SISMEMBER(input[1],input[2]);						
-						System.out.println(print);
-						if(print.equals("the given key does not exists")){
-							return -1;
-						}else{
-							return 0;
-						}	
 						
-					}
-					
-					
-				case "SMEMBERS" :
-					if(input.length != 2){						
-						return execCommande("ERROR");
-					}else{
-						String print =  cmd.SMEMBERS(input[1]);						
-						System.out.println(print);
-						if(print.equals("the given key does not exists")){
-							return -1;
-						}else{
-							return 0;
-						}
-						
-					}
-					
-					
-				case "SUNION" :
-					if(input.length != 3){						
-						return execCommande("ERROR");
-					}else{
-						System.out.println(cmd.SUNION(input[1],input[2]));
-						return 0;
-					}
-					
-					
-				case "HSET" :
-					if(input.length != 4){						
-						return execCommande("ERROR");
-					}else{
-						System.out.println(cmd.HSET(input[1],input[2],input[3]));
-						return 0;
-					}
-					
-					
-				case "HGETALL" :
-					if(input.length != 2){						
-						return execCommande("ERROR");
-					}else{
-						String print =  cmd.HGETALL(input[1]);						
-						System.out.println(print);
-						if(print.equals("the given key does not exists")){
-							return -1;
-						}else{
-							return 0;
-						}
-						
-					}
-					
-					
-				case "HGET" :
-					if(input.length != 3){						
-						return execCommande("ERROR");
-					}else{
-						String print =  cmd.HGET(input[1],input[2]);						
-						System.out.println(print);
-						if((print.equals("the given key does not exists"))||(print.equals("the given field does not exist"))){
-							return -1;
-						}else{
-							return 0;
-						}
-						
-					}
-					
-					
-				case "HINCRBY" :
-					if(input.length != 4){						
-						return execCommande("ERROR");
-					}else{
-						String print =  cmd.HINCRBY(input[1],input[2],input[3]);						
-						System.out.println(print);
-						String[] splitPrint = print.split(" "); 
-						if(splitPrint[1].equals("(Integer)")){
-							return 0;
-						}else{
-							return -1;
-						}	
-						
-					}
-					
-				
-				case "HDECRBY" :
-					if(input.length != 4){						
-						return execCommande("ERROR");
-					}else{
-						String print =  cmd.HDECRBY(input[1],input[2],input[3]);						
-						System.out.println(print);
-						String[] splitPrint = print.split(" "); 
-						if(splitPrint[1].equals("(Integer)")){
-							return 0;
-						}else{
-							return -1;
-						}												
-					}
-					
-				case "HDEL" :
-					if(input.length != 3){						
-						return execCommande("ERROR");
-					}else{
-						String print =  cmd.HDEL(input[1],input[2]);						
-						System.out.println(print);
-						String[] splitPrint = print.split(" "); 
-						if(splitPrint[1].equals("(Integer)")){
-							return 0;
-						}else{
-							return -1;
-						}							
-					}					
-					
-				case "ERROR" : 
-					System.out.println("number of arguements in the command does not match");
-					return -1;
-				default :
-					System.out.println("the command does not exist");
-					return -1;
+					case "ERROR" : 
+						System.out.println("number of arguements in the command does not match");
+						return -1;
+					default :
+						System.out.println("the command does not exist");
+						return -1;
+				}	
 			}
-				
-				
-		}else{
-			throw new NullPointerException();
+			else {
+				return -1;
+			}
+		} catch (Exception e) {
+			throw e;
 		}
 		
 	}
@@ -374,7 +377,7 @@ public class Transaction{
 					break;
 					
 				case "SUNION" :
-					cmd.removeList(input[1]);							
+					cmd.removeSet(input[1]);							
 					break;
 					
 				case "HSET" :

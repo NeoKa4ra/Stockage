@@ -94,7 +94,7 @@ public class TestTransaction {
 	public void testExecCommandeLPOP(){
 		String input = "LPOP is false";
 		assertEquals(t.execCommande(input), -1);
-		String pushing = "RPUSH key is a true thing";
+		String pushing = "LPUSH key is a true thing";
 		t.execCommande(pushing);
 		input = "LPOP notAKey";
 		assertEquals(t.execCommande(input), -1);
@@ -264,9 +264,90 @@ public class TestTransaction {
 	public void testUndoCommande(){
 		String input = "SET damien 13";
 		t.execCommande(input);
-		int size = t.size();
 		t.undoCommand(input);
-		assertEquals(t.size(), size-1);
+		assertEquals(t.size(), 0);
+		
+		input = "SET damien 13";
+		t.execCommande(input);
+		input = "DECR damien";
+		t.execCommande(input);
+		t.undoCommand(input);
+		assertEquals(t.size(), 0);
+		
+		input = "SET damien 13";
+		t.execCommande(input);
+		input = "INCR damien";
+		t.execCommande(input);
+		t.undoCommand(input);
+		assertEquals(t.size(), 0);
+		
+		input = "SET damien 13";
+		t.execCommande(input);
+		input = "DEL damien";
+		t.execCommande(input);
+		t.undoCommand(input);
+		assertEquals(t.size(), 0);
+	}
+	
+	@Test
+	public void testUndoCommandeList(){
+		String input = "LPUSH this is a true thing";
+		assertEquals(t.execCommande(input), 0);
+		t.undoCommand(input);
+		assertEquals(t.size(), 0);
+		
+		input = "RPUSH this is a true thing";
+		assertEquals(t.execCommande(input), 0);
+		t.undoCommand(input);
+		assertEquals(t.size(), 0);
+	}
+	
+	@Test
+	public void testUndoCommandSet(){
+		String input = "SADD key val1 val2 val3";
+		assertEquals(t.execCommande(input), 0);
+		t.undoCommand(input);
+		assertEquals(t.size(), 0);
+		
+		input = "SADD key2 val1 val2 val3";
+		assertEquals(t.execCommande(input), 0);
+		
+		input = "SADD key val4 val5 val6";
+		assertEquals(t.execCommande(input), 0);
+		
+		input = "SUNION key key2";
+		assertEquals(t.execCommande(input), 0);
+		t.undoCommand(input);
+		assertEquals(t.size(), 1);
+	}
+	
+	@Test
+	public void testUndoCommandHash(){
+		String input = "HSET key field value";
+		assertEquals(t.execCommande(input), 0);
+		t.undoCommand(input);
+		assertEquals(t.size(), 0);
+		
+		input = "HSET key field value";
+		t.execCommande(input);
+		input = "HDECRBY key field 15";
+		t.execCommande(input);
+		t.undoCommand(input);
+		assertEquals(t.size(), 0);
+		
+		input = "HSET key field value";
+		t.execCommande(input);
+		input = "HINCRBY key field 15";
+		t.execCommande(input);
+		t.undoCommand(input);
+		assertEquals(t.size(), 0);
+		
+		input = "HSET key field value";
+		t.execCommande(input);
+		input = "HDEL key field 15";
+		t.execCommande(input);
+		t.undoCommand(input);
+		assertEquals(t.size(), 0);
 	}
 	
 	@Test
@@ -278,6 +359,12 @@ public class TestTransaction {
 	@Test (expected = NullPointerException.class)
 	public void testExecCommandeNull() throws NullPointerException{
 		t.execCommande(null);
+	}
+	
+	@Test
+	public void testExecCommandeEMPTY(){
+		String input = "  do something";
+		assertEquals(t.execCommande(input), -1);
 	}
 	
 	@Test
