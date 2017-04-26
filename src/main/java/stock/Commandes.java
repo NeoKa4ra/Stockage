@@ -83,7 +83,7 @@ public class Commandes implements CommandeItf<String>{
 		
 		if(stockString.containsKey(key)){			
 			if(isInteger(stockString.get(key))){
-				synchronized (stockString) {
+				synchronized (stockString.get(key)) {
 					int tmp = Integer.parseInt(stockString.get(key));
 					tmp++;
 					stockString.put(key, String.valueOf(tmp));

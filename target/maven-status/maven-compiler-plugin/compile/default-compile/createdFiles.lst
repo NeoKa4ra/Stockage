@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-main/java/CommandeItf.class
-main/java/Commandes.class
-=======
->>>>>>> romain
+stock/Commandes.class
+stock/Menu.class
+stock/Transaction.class
+stock/CommandeItf.class
