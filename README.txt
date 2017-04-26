@@ -42,6 +42,7 @@ HINCRBY Key Field Value : Incrémente la valeur de "Value" dans le champ "Field"
 # Utilisation 
 
 Exécuter le Menu afin d'accéder à toutes ces fonctionnalités.
+La commande "-help" permet d'afficher la liste des commandes existante et "-quit" de quitter le programme.
 De plus, nous gérons un historique des commandes, que nous pouvons retrouver à l'aide de la commande "-hist"
 
 
@@ -56,3 +57,6 @@ L'utilisation de Travis semble primordiale dans un grand projet,
 puisqu'elle permet de s'assurer que les modifications du push n'entravent pas les précédentes validations.
 Elle nous a permit de voir que si on modifie la structure et les commandes déjà mises en place dans les tests, 
 il faut soit changer le test et voir tout ce que cela implique, soit faire en sorte que le test passe à nouveau.
+Maven apporte beaucoup de outils essentiels permettant le bon fonctionnement d'un projet, tel que la compilation, l'exécution des tests unitaires, la couverture de code et j'en passe.. En tout cas pour Java, c'est un outils que nous comptons réutiliser dans des projets à venir.
+L'utilisation de Git n'est pas nouveau, mais je pense indispensable dans un projet en groupe, ce projet nous a permis d'être un peu plus à l'aise sur des fonctionnalité existante très pratique dont on n'avait pas l'habitude d'utiliser.
+Eclispe est un IDE très pratique quand il est bien mis en place, néanmoins nous restons assez séptique pour comprendre son fonctionnement lorsqu'il ne fait ce que l'on veut.
