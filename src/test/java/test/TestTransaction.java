@@ -261,9 +261,23 @@ public class TestTransaction {
 	}
 	
 	@Test
+	public void testUndoCommande(){
+		String input = "SET damien 13";
+		t.execCommande(input);
+		int size = t.size();
+		t.undoCommand(input);
+		assertEquals(t.size(), size-1);
+	}
+	
+	@Test
 	public void testExecCommandeERROR(){
 		String input = "ERROR";
 		assertEquals(t.execCommande(input), -1);
+	}
+	
+	@Test (expected = NullPointerException.class)
+	public void testExecCommandeNull() throws NullPointerException{
+		t.execCommande(null);
 	}
 	
 	@Test

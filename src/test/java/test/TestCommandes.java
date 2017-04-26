@@ -51,11 +51,11 @@ public class TestCommandes {
 	
 	@Test
 	public void testDEL(){
-		assertEquals(this.c.DECR("unexisting"),"the given key does not exists");
-		this.c.SET("notAnInteger","Hello");
-		assertEquals(this.c.DECR("notAnInteger"), "the given value of the key is not an integer");
-		this.c.SET("anInteger","15");
-		assertEquals(this.c.DECR("anInteger"), "(Integer) 14");
+		assertEquals(this.c.DEL("unexisting"),"the given key does not exists");
+		this.c.SET("Integer","Hello");
+		assertEquals(this.c.DEL("Integer"), "the given value of the key is not an integer");
+		this.c.SET("Integer","15");
+		assertEquals(this.c.DEL("Integer"), "(Integer) 0");
 	}
 	
 	@Test
@@ -76,14 +76,14 @@ public class TestCommandes {
 	public void testRPUSH(){
 		LinkedList<String> list = new LinkedList<String>();
 		list.add("First Elt");
-		assertEquals(this.c.LPUSH("newList",list),"(Integer) " + 1);
+		assertEquals(this.c.RPUSH("newList",list),"(Integer) " + 1);
 		list = new LinkedList<String>();
 		list.add("Scnd Elt");
-		assertEquals(this.c.LPUSH("newList",list),"(Integer) " + 2);
+		assertEquals(this.c.RPUSH("newList",list),"(Integer) " + 2);
 		list = new LinkedList<String>();
 		list.add("3rd Elt");
 		list.add("4th Elt");
-		assertEquals(this.c.LPUSH("newList",list),"(Integer) " + 4);
+		assertEquals(this.c.RPUSH("newList",list),"(Integer) " + 4);
 	}
 	
 	@Test
@@ -241,4 +241,41 @@ public class TestCommandes {
 		assertEquals(this.c.HDEL("key", "integer"),"integer" + " (Integer) 0");
 	}
 
+	@Test
+	public void testRemoveString(){
+		c.SET("number","15");
+		c.removeString("number");
+		assertEquals(this.c.GET("number"),"the given key does not exists");
+	}
+	
+	@Test
+	public void testRemoveList(){
+		LinkedList<String> list = new LinkedList<String>();
+		list.add("First Elt");
+		this.c.LPUSH("testList",list);
+		c.removeList("testList");
+		assertEquals(this.c.LPOP("testList"),"the given key does not exists");
+	}
+	
+	@Test
+	public void testRemoveSet(){
+		Set<String> set = new HashSet<String>();
+		set.add("1 Elt");
+		set.add("2 Elt");
+		c.SADD("testSet", set);
+		c.removeSet("testSet");
+		assertEquals(this.c.SMEMBERS("testSet"),"the given key does not exists");
+	}
+	
+	@Test
+	public void testRemoveHash(){
+		this.c.HSET("key", "field", "value");
+		this.c.removeHash("key");
+		assertEquals(this.c.HGET("key","field"),"the given key does not exists");
+	}
+	
+	@Test
+	public void testIsInteger(){
+		assertFalse(this.c.isInteger("a b"));
+	}
 }

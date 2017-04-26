@@ -37,7 +37,7 @@ public class Transaction{
 				);
 	}
 	
-	public int execCommande(String s){
+	public int execCommande(String s) throws NullPointerException{
 		String[] input = s.split(" ");
 		if(input[0] != null){
 			switch (input[0].toUpperCase()) {
@@ -62,11 +62,7 @@ public class Transaction{
 					}else{
 						String print = cmd.SET(input[1],input[2]) ;						
 						System.out.println(print);
-						if(print.equals("OK")){
-							return 0;
-						}else{
-							return -1;
-						}
+						return 0;
 					}						
 					
 				case "DECR" :
@@ -339,7 +335,7 @@ public class Transaction{
 				
 				
 		}else{
-			return -1;
+			throw new NullPointerException();
 		}
 		
 	}
@@ -348,9 +344,6 @@ public class Transaction{
 		String[] input = s.split(" ");
 		if(input[0] != null){
 			switch (input[0].toUpperCase()) {
-			
-				case "GET" :					
-					break;
 					
 				case "SET" :
 					cmd.removeString(input[1]);					
@@ -375,27 +368,9 @@ public class Transaction{
 				case "RPUSH" :
 					cmd.removeList(input[1]);					
 					break;
-				
-				case "LPOP" :					
-					break;
-				
-				case "RPOP" :				
-					break;
-					
-				case "LLEN" :					
-					break;
-					
-				case "SREM" :					
-					break;
-					
+									
 				case "SADD" :
 					cmd.removeSet(input[1]);
-					break;
-					
-				case "SISMEMBER" :					
-					break;
-					
-				case "SMEMBERS" :					
 					break;
 					
 				case "SUNION" :
@@ -404,12 +379,6 @@ public class Transaction{
 					
 				case "HSET" :
 					cmd.removeHash(input[1]);
-					break;
-					
-				case "HGETALL" :					
-					break;
-					
-				case "HGET" :					
 					break;
 					
 				case "HINCRBY" :

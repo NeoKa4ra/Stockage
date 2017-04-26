@@ -37,11 +37,11 @@ public class Commandes implements CommandeItf<String>{
 	}
 	
 	public void removeSet(String key){
-		stockList.remove(key);
+		stockSet.remove(key);
 	}
 	
 	public void removeHash(String key){
-		stockList.remove(key);
+		stockHash.remove(key);
 	}
 	
 
@@ -364,15 +364,12 @@ public class Commandes implements CommandeItf<String>{
 		
 	}
 
-	private boolean isInteger(String s) {
+	public boolean isInteger(String s) {
 	    try { 
 	        Integer.parseInt(s); 
 	    } catch(NumberFormatException e) { 
 	        return false; 
-	    } catch(NullPointerException e) {
-	        return false;
 	    }
-	    
 	    return true;
 	}
 	
