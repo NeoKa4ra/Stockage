@@ -19,10 +19,36 @@ public class Commandes implements CommandeItf<String>{
 		stockSet = new HashMap<String, Set<String>>();
 		stockHash = new HashMap<String, HashMap<String,String>>();		
 	}
+	
+	public int size(){
+		int size = 0;
+		size += stockString.size();
+		size += stockList.size();
+		size += stockSet.size();
+		size += stockHash.size();
+		return size;
+	}
+	
+	public void removeString(String key){
+		stockString.remove(key);
+	}
+	
+	public void removeList(String key){
+		stockList.remove(key);
+	}
+	
+	public void removeSet(String key){
+		stockList.remove(key);
+	}
+	
+	public void removeHash(String key){
+		stockList.remove(key);
+	}
+	
 
 	public String GET(String key) {
 		if(stockString.containsKey(key)){
-			synchronized (stockString.get(key)) {
+			synchronized (stockString) {
 				return stockString.get(key);
 			}
 		}else{
@@ -32,18 +58,15 @@ public class Commandes implements CommandeItf<String>{
 
 	public String SET(String key, String value) {
 
-		synchronized (stockString.get(key)) {
-			stockString.put(key, value);
-			return "OK";
-		}
-		
+		stockString.put(key, value);
+		return "OK";		
 	}
 
 	public String DECR(String key) {
 		
 		if(stockString.containsKey(key)){			
 			if(isInteger(stockString.get(key))){
-				synchronized (stockString.get(key)) {
+				synchronized (stockString) {
 					int tmp = Integer.parseInt(stockString.get(key));
 					tmp--;
 					stockString.put(key, String.valueOf(tmp));
@@ -61,7 +84,7 @@ public class Commandes implements CommandeItf<String>{
 		
 		if(stockString.containsKey(key)){			
 			if(isInteger(stockString.get(key))){
-				synchronized (stockString.get(key)) {
+				synchronized (stockString) {
 					int tmp = Integer.parseInt(stockString.get(key));
 					tmp++;
 					stockString.put(key, String.valueOf(tmp));
@@ -79,7 +102,7 @@ public class Commandes implements CommandeItf<String>{
 		
 		if(stockString.containsKey(key)){			
 			if(isInteger(stockString.get(key))){				
-				synchronized (stockString.get(key)) {
+				synchronized (stockString) {
 					stockString.put(key, "0");				
 					return "(Integer) 0";
 				}
@@ -93,39 +116,36 @@ public class Commandes implements CommandeItf<String>{
 
 	public String LPUSH(String key, LinkedList<String> value) {
 		if(stockList.containsKey(key)){
-			synchronized (stockList.get(key)) {
+			synchronized (stockList) {
 				LinkedList<String> tmp = stockList.get(key);
 				value.addAll(tmp);
 				stockList.put(key, value);
 				return "(Integer) " + stockList.get(key).size();
 			}
-		}else{
-			synchronized (stockList.get(key)) {
-				stockList.put(key, value);
-				return "(Integer) " + stockList.get(key).size();
-			}
+		}else{			
+			stockList.put(key, value);
+			return "(Integer) " + stockList.get(key).size();
+			
 		}
 	}
 
 	public String RPUSH(String key, LinkedList<String> value) {
 		if(stockList.containsKey(key)){
-			synchronized (stockList.get(key)) {
+			synchronized (stockList) {
 				LinkedList<String> tmp = stockList.get(key);
 				tmp.addAll(value);
 				stockList.put(key, tmp);
 				return "(Integer) " + stockList.get(key).size();
 			}
-		}else{
-			synchronized (stockList.get(key)) {
-				stockList.put(key, value);
-				return "(Integer) " + stockList.get(key).size();
-			}
+		}else{		
+			stockList.put(key, value);
+			return "(Integer) " + stockList.get(key).size();			
 		}
 	}
 
 	public String LPOP(String key) {
 		if(stockList.containsKey(key)){
-			synchronized (stockList.get(key)) {
+			synchronized (stockList) {
 				String tmp = stockList.get(key).removeFirst();
 				return tmp;
 			}
@@ -136,7 +156,7 @@ public class Commandes implements CommandeItf<String>{
 
 	public String RPOP(String key) {
 		if(stockList.containsKey(key)){
-			synchronized (stockList.get(key)) {
+			synchronized (stockList) {
 				String tmp = stockList.get(key).removeLast();
 				return tmp;
 			}
@@ -147,7 +167,7 @@ public class Commandes implements CommandeItf<String>{
 
 	public String LLEN(String key) {
 		if(stockList.containsKey(key)){			
-			synchronized (stockList.get(key)) {
+			synchronized (stockList) {
 				return String.valueOf(stockList.get(key).size());
 			}
 		}else{
@@ -157,12 +177,11 @@ public class Commandes implements CommandeItf<String>{
 
 	public String SREM(String key, String value) {
 		if(stockSet.containsKey(key)){
-			synchronized (stockSet.get(key)) {
+			synchronized (stockSet) {
 				Set<String> tmp = stockSet.get(key);
 				if(tmp.contains(value)){
 					stockSet.get(key).remove(value);
 					return "(Integer) 1";
-					
 				}else{
 					return "(Integer) 0";				
 				}
@@ -173,59 +192,62 @@ public class Commandes implements CommandeItf<String>{
 	}
 
 	public String SADD(String key, Set<String> value) {
-		synchronized (stockSet.get(key)) {
-			if(stockSet.containsKey(key)){			
+		
+		if(stockSet.containsKey(key)){	
+			synchronized (stockSet) {
 				stockSet.get(key).addAll(value);
-				return "(Integer) " + stockSet.get(key).size(); 
-			}else{
-				stockSet.put(key, value);
-				return "(Integer) " + stockSet.get(key).size(); 
+				return "(Integer) " + stockSet.get(key).size();
 			}
+		}else{
+			stockSet.put(key, value);
+			return "(Integer) " + stockSet.get(key).size(); 
 		}
+		
 	}
 
 	public String SISMEMBER(String key, String value) {
-		
-		synchronized (stockSet.get(key)) {
-			if(stockSet.containsKey(key)){
+				
+		if(stockSet.containsKey(key)){
+			synchronized (stockSet) {
 				if(stockSet.get(key).contains(value)){
 					return "(Integer) 1";
 				}else{
 					return "(Integer) 0";
 				}
-			}else{
-				return "the given key does not exists";
 			}
+		}else{
+			return "the given key does not exists";
 		}
+		
 	}
 
 	public String SMEMBERS(String key) {
-		
-		synchronized (stockSet.get(key)) {
-			if(stockSet.containsKey(key)){
+				
+		if(stockSet.containsKey(key)){
+			synchronized (stockSet) {
 				return stockSet.get(key).toString();
-			}else{
-				return "the given key does not exists";
 			}
+		}else{
+			return "the given key does not exists";
 		}
 		
 	}
 
 	public String SUNION(String key1, String key2) {
-		
-		synchronized (stockSet.get(key1)) {
-			if(stockSet.containsKey(key2)){
-				stockSet.get(key1).addAll(stockSet.get(key2));
-				return stockSet.get(key1).toString();
-			}else{
-				return stockSet.get(key1).toString();			
-			}
+				
+		if(stockSet.containsKey(key2)){
+			stockSet.get(key1).addAll(stockSet.get(key2));
+			return stockSet.get(key1).toString();
+		}else{
+			return stockSet.get(key1).toString();			
 		}
+		
 	}
 
 	public String HSET(String key, String field, String value) {
-		synchronized (stockHash.get(key)) {
-			if(stockHash.containsKey(key)){
+		
+		if(stockHash.containsKey(key)){
+			synchronized (stockHash) {
 				if(stockHash.get(key).containsKey(field)){	
 					stockHash.get(key).put(field, value);
 					return "(Integer) 0";
@@ -233,43 +255,47 @@ public class Commandes implements CommandeItf<String>{
 					stockHash.get(key).put(field, value);
 					return "(Integer) 1";
 				}
-			}else{
-				HashMap<String,String> tmp = new HashMap<String,String>();
-				tmp.put(field, value);
-				stockHash.put(key,tmp);
-				return "(Integer) 0";
 			}
-		}
+		}else{
+			HashMap<String,String> tmp = new HashMap<String,String>();
+			tmp.put(field, value);
+			stockHash.put(key,tmp);
+			return "(Integer) 0";
+		}		
 	}
 
-	public String HGETALL(String key) {
+	public String HGETALL(String key) {		
 		
-		synchronized (stockHash.get(key)) {
-			if(stockHash.containsKey(key)){
+		if(stockHash.containsKey(key)){
+			synchronized (stockHash) {
 				return stockHash.get(key).toString();
-			}else{
-				return "the given key does not exists";
 			}
-		}				
+		}else{
+			return "the given key does not exists";
+		}
+						
 	}
 
 	public String HGET(String key, String field) {
-		synchronized (stockHash.get(key)) {
-			if(stockHash.containsKey(key)){
+		
+		if(stockHash.containsKey(key)){
+			synchronized (stockHash) {
 				if(stockHash.get(key).containsKey(field)){
 					return field + " " + stockHash.get(key).get(field);
 				}else{
 					return "the given field does not exist";
 				}
-			}else{
-				return "the given key does not exists"; 
 			}
+		}else{
+			return "the given key does not exists"; 
 		}
+		
 	}
 
 	public String HINCRBY(String key, String field, String value) {
-		synchronized (stockHash.get(key)) {
-			if(stockHash.containsKey(key)){
+		
+		if(stockHash.containsKey(key)){
+			synchronized (stockHash) {
 				if(stockHash.get(key).containsKey(field)){
 					if(isInteger(stockHash.get(key).get(field))){
 						
@@ -284,15 +310,17 @@ public class Commandes implements CommandeItf<String>{
 				}else{
 					return "the given field does not exist";
 				}
-			}else{
-				return "the given key does not exists"; 
 			}
-			
+		}else{
+			return "the given key does not exists"; 
 		}
+			
+		
 	}
 	public String HDECRBY(String key,String field,  String value) {
-		synchronized (stockHash.get(key)) {
-			if(stockHash.containsKey(key)){
+	
+		if(stockHash.containsKey(key)){
+			synchronized (stockHash) {
 				if(stockHash.get(key).containsKey(field)){
 					if(isInteger(stockHash.get(key).get(field))){
 						
@@ -307,16 +335,17 @@ public class Commandes implements CommandeItf<String>{
 				}else{
 					return "the given field does not exist";
 				}
-			}else{
-				return "the given key does not exists"; 
 			}
-			
+		}else{
+			return "the given key does not exists"; 
 		}
+			
 	}
 
 	public String HDEL(String key, String field) {
-		synchronized (stockHash.get(key)) {
-			if(stockHash.containsKey(key)){
+		
+		if(stockHash.containsKey(key)){
+			synchronized (stockHash) {
 				if(stockHash.get(key).containsKey(field)){
 					if(isInteger(stockHash.get(key).get(field))){
 						
@@ -329,11 +358,11 @@ public class Commandes implements CommandeItf<String>{
 				}else{
 					return "the given field does not exist";
 				}
-			}else{
-				return "the given key does not exists"; 
 			}
-			
-		}
+		}else{
+			return "the given key does not exists"; 
+		}			
+		
 	}
 
 	private boolean isInteger(String s) {
